@@ -3,7 +3,10 @@ import "./Login.css"
 import Logo from "./components/assets/images/logo.png"
 import { Link } from "react-router-dom"
 import { auth } from './firebase'
+import {GoogleAuthProvider,signInWithPopup,signOut} from 'firebase/auth';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+// import { getAuth, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
+import {ToastContainer,toast} from "react-toastify";
 
 function Login() {
     const history = useHistory();
@@ -37,6 +40,31 @@ function Login() {
     //         .catch(error => alert(error.message))
 
     // }
+    const provider=new GoogleAuthProvider();
+
+    const handleGoogleLogin =(e)=>{
+             e.preventDefault()
+             signInWithPopup(auth,provider).then((result)=>{
+                const  user= result.user;
+                console.log(user);
+             }).catch((error)=>{
+                console.log(error);
+             })
+             
+    }
+    const handleSignOut =()=>{
+        signOut(auth)
+        .then(()=>{
+            toast.success("Log Out SuccessFully!");
+            
+
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+      
+        
+}
 
     return (
         <div className='utkalalogin'>
@@ -45,8 +73,8 @@ function Login() {
             </Link>
 
             <div className='utkalalogin_container'>
-                <h1>Sign In</h1>
-                <form>
+                <h1 class="signin">Sign In</h1>
+                <form class="text">
                     <h5>E-mail</h5>
                     <input type='text' value={email} onChange={e => setEmail(e.target.value)} />
                     <h5>Password</h5>
@@ -57,11 +85,28 @@ function Login() {
                     <Link to="/Signup">
                         <button className='utkalaloginbutton' type="submit" >Sign-Up</button>
                     </Link>
-
+                    <div className="sign">
+                        <button className="google"onClick={handleGoogleLogin}><i class="fa-brands fa-google"></i></button>
+                        <button className='signout' onClick={handleSignOut}>Sign Out</button>
+                    </div>
                 </form>
+                
             </div>
+
+           <ToastContainer
+            position='top-left'
+            autoClose={2000}
+            hideProgressBar={true}
+            newestOnTop={true}
+            closeOnClick
+            rtl={true}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark" />
         </div>
+        
     )
 }
 
-export default Login
+export default Login;
