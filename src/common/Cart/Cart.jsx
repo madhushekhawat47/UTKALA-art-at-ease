@@ -1,6 +1,8 @@
 import React from "react"
 import "./style.css"
 import { useHistory } from "react-router-dom"
+import StripeCheckout from "react-stripe-checkout"
+
 
 
 const Cart = ({ CartItem, addToCart, decreaseQty }) => {
@@ -71,7 +73,21 @@ const Cart = ({ CartItem, addToCart, decreaseQty }) => {
             <div className="d_flexx" >
               <button className="proceedtocheckoutbutton" onClick={e => history.push('/payment')}>Proceed to Checkout</button>
             </div>
+                   {
+                // payNow &&
+                 <div className="w-full mt-6 flex items-center justify-center">
+                  <StripeCheckout 
+                    stripeKey="pk_test_51OlC5jSAVdx4M2gU21rqAZHBb2gNJiEPX6WbB98WGN2L9duAyoJNUHtxJgeQiZjQp37ArtxTTSL4pPNq5N6kYTyC00B6pH38VO"
+                    name="Utkala"
+                    amount={totalPrice*100}
+                    label="Pay Now"
+                    description={`Your payment amount is :  RS${totalPrice}.00`}
+                    //  token={payment}
+                    email="bankakhushi123@gmail.com"
 
+                 />
+                  </div>
+              }
           </div>
         </div>
       </section>
