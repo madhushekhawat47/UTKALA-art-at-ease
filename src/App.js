@@ -13,7 +13,7 @@ import AboutUs from "./AboutUs"
 import MainContent from "./ProductListingPage"
 import Signup from "./Signup"
 import Utkalateam from "./Utkalateam"
-import Payment from "./payment"
+import Payment from "./CartConfirmation"
 
 
 
@@ -92,9 +92,11 @@ function App() {
             <MainContent />
           </Route>
           <Route path="/ContactUs">
+            <Header CartItem={CartItem} />
             <ContactUs />
+            <Footer />
           </Route>
-          <Route path="/payment">
+          <Route path="/CartConfirmation">
             <Header CartItem={CartItem} />
             <Payment />
             <Footer />
